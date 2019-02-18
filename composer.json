@@ -1,0 +1,99 @@
+{
+    "name": "falgun/skeleton",
+    "description": "This is skeleton for Falgun Framework.",
+    "type": "project",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "authors": [
+        {
+            "name": "Ataur Rahman",
+            "email": "dev.ataur.rahman@gmail.com"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/falgun/cache.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/falgun/controller.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/falgun/console.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/falgun/database.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/falgun/dinjector.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/falgun/falguncli.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/falgun/fancyerror.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/falgun/helpers.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/falgun/http.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/falgun/manager.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/falgun/pagination.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/falgun/reporter.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/falgun/smarter.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/falgun/template.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/falgun/validation.git"
+        }
+    ],
+    "require": {
+        "php": ">=7.2.0",
+        "falgun/cache": "*",
+        "falgun/controller": "*",
+        "falgun/console": "*",
+        "falgun/database": "*",
+        "falgun/dinjector": "*",
+        "falgun/falguncli": "*",
+        "falgun/fancyerror": "*",
+        "falgun/helpers": "*",
+        "falgun/http": "*",
+        "falgun/manager": "*",
+        "falgun/pagination": "*",
+        "falgun/reporter": "*",
+        "falgun/smarter": "*",
+        "falgun/template": "*",
+        "falgun/validation": "*",
+        "mmucklo/inflect": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    }
+}
