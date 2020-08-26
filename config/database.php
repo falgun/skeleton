@@ -1,8 +1,8 @@
 <?php
-return array(
+return [
     'host' => 'localhost',
     'user' => 'root',
     'password' => '',
     'db' => 'falgun',
-    'characterSet' => 'utf-8'
-);
+    'characterSet' => 'utf8'
+];

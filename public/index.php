@@ -1,53 +1,34 @@
 <?php
-// Let's Boot our App
-
-$startTime = microtime(true);
-$startMemory = round(memory_get_usage(false) / 1024 / 1024, 2);
-
 
 define('ROOT_DIR', dirname(__DIR__));
 define('DS', DIRECTORY_SEPARATOR);
-define("NS", '\\');
+define('NS', '\\');
 
 require ROOT_DIR . DS . 'vendor' . DS . 'autoload.php';
 
-define('APP_DIR', ROOT_DIR . DS . 'src');
-define('PUBLIC_DIR', 'public');
-define('CONFIG_DIR', ROOT_DIR . DS . 'config');
-define('VAR_DIR', ROOT_DIR . DS . 'var');
-
-/*
- * Temp
- */
-
-define('DATETIME_FORMAT', 'Y-m-d H:i:s');
-define("DATETIME", date(DATETIME_FORMAT));
-define("DATE", date('Y-m-d'));
-
-if (!empty($_SERVER['HTTP_HOST'])) {
-    define("CURRENT_URL", (isset($_SERVER['REQUEST_SCHEME']) ? $_SERVER['REQUEST_SCHEME'] . '://' : ((isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on') ? 'https://' : 'http://')) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-} else {
-    define('CURRENT_URL', '');
-}
-
-if (strpos(CURRENT_URL, '?') !== false) {
-    define('CURRENT_MAINURL', strstr(CURRENT_URL, '?', true));
-} else {
-    define('CURRENT_MAINURL', CURRENT_URL);
-}
-
-require CONFIG_DIR . DS . 'config.php';
-
-use Falgun\DInjector\Singleton;
+use Falgun\Application\Config;
+use Falgun\Application\Application;
 use Falgun\Reporter\DevReporter;
+use Falgun\FancyError\ErrorHandler;
+use Falgun\Routing\RouterInterface;
+use Falgun\Fountain\Fountain;
+use Falgun\Http\Request;
 
-if (isDebug()) {
+$config = Config::fromFileDir(ROOT_DIR . '/config');
+
+$appDir = ROOT_DIR . '/' . $config->getIfAvailable('APP_DIR', 'src');
+
+/**
+ * Huge Memory Wasted here
+ * FIX IT
+ * Should we use another reporter for production?
+ */
+if ($config->get('DEBUG')) {
     /**
      * Lets prepare everything for developer reporting
      * Report will be generated on script destruction
      */
-    $reporter = new DevReporter($startTime, $startMemory);
-    Singleton::set($reporter);
+    $reporter = new DevReporter();
 }
 
 /**
@@ -55,21 +36,40 @@ if (isDebug()) {
  *  Love them and make them love you
  *  We will handle error as they deserve
  */
-use Falgun\FancyError\ErrorHandler;
-
-new ErrorHandler();
+$errorHandler = ErrorHandler::createFromConfig($config, ROOT_DIR);
 
 /**
  *  Load and initiate routes
  *  Will return Router instance
  */
-$router = require APP_DIR . DS . 'routes.php';
+$routeLoader = function () use($config, $appDir): RouterInterface {
 
-/**
- *  We will now start to load our task manager
- *  He is responsible for all MVC related calls
- */
-use Falgun\Manager\Manager;
+    $router = require $appDir . '/routes.php';
 
-$taskManager = new Manager($router);
-$taskManager->manage();
+    if (!$router instanceof RouterInterface) {
+        throw new \Exception('routes.php must return an implementation of ' . RouterInterface::class);
+    }
+
+    return $router;
+};
+
+$router = $routeLoader();
+
+$container = new Fountain(new \Falgun\Fountain\SharedServices());
+
+$request = Request::createFromGlobals();
+
+$container->set(Config::class, $config);
+$container->set(Request::class, $request);
+
+if (isset($reporter)) {
+    $container->set(DevReporter::class, $reporter);
+}
+
+$middlewareGroups = [];
+if (\file_exists($appDir . '/middlewares.php')) {
+    $middlewareGroups = (require $appDir . '/middlewares.php');
+}
+
+$application = new Application($config, $container, $router, $middlewareGroups, $reporter);
+$application->run($request);

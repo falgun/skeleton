@@ -1,11 +1,14 @@
 # Skeleton
 
-Bare Bone structure for application built with Falgun Framework.
+Application Skeleton for Falgun Framework.
 
 ## Install
+ *Please note that PHP 7.4 or higher is required.*
+
+Via Composer
 
 ``` bash
-$ git clone https://github.com/falgun/skeleton.git
+$ composer create-project falgunphp/skeleton --stability=dev --no-dev 
 ```
 
 ## License

@@ -1,10 +1,14 @@
 <?php
+
 namespace App;
 
-use Falgun\Http\Routing\Router;
+use Falgun\Routing\Router;
+use App\Controllers\WelcomeController;
 
-$router = new Router();
+// $config is available here
+$router = new Router($config->get('BASE_URL'));
 
-$router->any('/')->action(Controllers\HomeController::class, 'index');
+$router->any('/')->action(WelcomeController::class, 'index');
 
-return $router->dispatch();
+// must return $router
+return $router;
