@@ -38,11 +38,14 @@ if ($config->get('DEBUG')) {
  */
 $errorHandler = ErrorHandler::createFromConfig($config, ROOT_DIR);
 
+
+$request = Request::createFromGlobals();
+
 /**
  *  Load and initiate routes
  *  Will return Router instance
  */
-$routeLoader = function () use($config, $appDir): RouterInterface {
+$routeLoader = function () use($request, $appDir): RouterInterface {
 
     $router = require $appDir . '/routes.php';
 
@@ -56,8 +59,6 @@ $routeLoader = function () use($config, $appDir): RouterInterface {
 $router = $routeLoader();
 
 $container = new Fountain(new \Falgun\Fountain\SharedServices());
-
-$request = Request::createFromGlobals();
 
 $container->set(Config::class, $config);
 $container->set(Request::class, $request);

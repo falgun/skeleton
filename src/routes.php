@@ -5,8 +5,10 @@ namespace App;
 use Falgun\Routing\Router;
 use App\Controllers\WelcomeController;
 
-// $config is available here
-$router = new Router($config->get('BASE_URL'));
+// $request is available here
+/* @var $request \Falgun\Http\Request */
+
+$router = new Router($request->uri()->getFullDocumentRootUrl());
 
 $router->any('/')->action(WelcomeController::class, 'index');
 
