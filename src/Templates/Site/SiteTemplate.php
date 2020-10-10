@@ -43,7 +43,13 @@ class SiteTemplate extends AbstractTemplate
 
     public function paginate()
     {
-        $bag = $this->pagination->make(intval($this->request->queryDatas()->get('page', 1)));
+        $bag = $this->page->getPagination()
+            ->make();
+
+        if ($this->page->getPagination()->getTotalPage() <= 1) {
+            return;
+        }
+
         require __DIR__ . '/pagination.php';
     }
 

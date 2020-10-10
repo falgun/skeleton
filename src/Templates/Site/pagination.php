@@ -1,14 +1,11 @@
-<?php
-echo '<ul class="pagination">';
-echo '<li class="' . ($bag->firstPage->isValid() ? '' : 'disabled' ) . '"><a href="' . $this->getPaginatedUri($bag->firstPage->page) . '" class="btn" >First</a></li>';
-echo '<li class="' . ($bag->prePage->isValid() ? '' : 'disabled' ) . '"><a href="' . $this->getPaginatedUri($bag->prePage->page) . '" class="btn" >Previous</a></li>';
+<ul class="pagination">
+    <li class="<?= ($bag->first()->isVisitable() ? '' : 'disabled' ); ?>"><a href="<?= $this->getPaginatedUri($bag->first()->page()); ?>" class="btn" >First</a></li>
+    <li class="<?= ($bag->previous()->isVisitable() ? '' : 'disabled' ); ?>"><a href="<?= $this->getPaginatedUri($bag->previous()->page()); ?>" class="btn" >Previous</a></li>
+    <?php foreach ($bag->pages() as $page) : ?>
+        <li class="<?= $page->isCurrent() ? 'active' : ''; ?>"><a href="<?= $this->getPaginatedUri($page->page()); ?>" class="btn" ><?= $page->title(); ?></a></li>
+    <?php endforeach; ?>
 
-foreach ($bag->links as $link) {
-    echo '<li class="' . ($link->current ? 'active' : '' ) . '"><a href="' . $this->getPaginatedUri($link->page) . '" class="btn" >' . $link->title . '</a></li>';
-}
-
-echo '<li class="' . ($bag->nextPage->isValid() ? '' : 'disabled' ) . '"><a href="' . $this->getPaginatedUri($bag->nextPage->page) . '" class="btn" >Next</a></li>';
-echo '<li class="' . ($bag->lastPage->isValid() ? '' : 'disabled' ) . '"><a href="' . $this->getPaginatedUri($bag->lastPage->page) . '" class="btn" >Last</a></li>';
-
-echo '</ul>';
+    <li class="<?= ($bag->next()->isVisitable() ? '' : 'disabled' ); ?>"><a href="<?= $this->getPaginatedUri($bag->next()->page()); ?>" class="btn">Next</a></li>
+    <li class="<?= ($bag->last()->isVisitable() ? '' : 'disabled' ); ?>"><a href="<?= $this->getPaginatedUri($bag->last()->page()); ?>" class="btn">Last</a></li>
+</ul>
 
