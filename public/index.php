@@ -1,5 +1,4 @@
 <?php
-
 define('ROOT_DIR', dirname(__DIR__));
 define('DS', DIRECTORY_SEPARATOR);
 define('NS', '\\');
@@ -9,6 +8,7 @@ require ROOT_DIR . DS . 'vendor' . DS . 'autoload.php';
 use Falgun\Application\Config;
 use Falgun\Application\Application;
 use Falgun\Reporter\DevReporter;
+use Falgun\Reporter\ProdReporter;
 use Falgun\FancyError\ErrorHandler;
 use Falgun\Routing\RouterInterface;
 use Falgun\Fountain\Fountain;
@@ -29,6 +29,8 @@ if ($config->get('DEBUG')) {
      * Report will be generated on script destruction
      */
     $reporter = new DevReporter();
+} else {
+    $reporter = new ProdReporter();
 }
 
 /**
@@ -66,6 +68,8 @@ $container->set(Request::class, $request);
 if (isset($reporter)) {
     $container->set(DevReporter::class, $reporter);
 }
+
+$errorHandler->applicationBooted($container);
 
 $middlewareGroups = [];
 if (\file_exists($appDir . '/middlewares.php')) {
