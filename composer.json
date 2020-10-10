@@ -23,24 +23,15 @@
     },
     "require": {
         "php": ">=7.4.0",
-        "falgunphp/application": "*",
-        "falgunphp/fancyerror": "*",
-        "falgunphp/reporter": "*",
-        "falgunphp/fountain": "*",
-        "falgunphp/http": "*",
-        "falgunphp/routing": "*",
-        "falgunphp/midlayer": "*",
-        "falgunphp/middlewares": "*",
-        "falgunphp/template": "*"
-    },
-    "require-dev": {
-        "squizlabs/php_codesniffer": "^3.5",
-        "phpstan/phpstan": "^0.12.18",
-        "vimeo/psalm": "^3.11",
-        "phpunit/phpunit": "^9.1"
-    },
-    "scripts": {
-        "phpunit": "phpunit --verbose --colors=always"
+        "falgunphp/application": "dev-master#f207c75fbf549d68d98023f95c82a470dc5f491a",
+        "falgunphp/fancyerror": "dev-master#968a4f2355951e27dca8e60c53158609bbcdaf5c",
+        "falgunphp/fountain": "dev-master#af99a9a181bce3344bedbdcec35b7c31157ec85b",
+        "falgunphp/http": "^0.0.3",
+        "falgunphp/midlayer": "dev-master#8ac93f9f71ed985f6c8076bcb14a1932604c6bc5",
+        "falgunphp/middlewares": "dev-master#ba97062df99eaac72f9fca926c22b79fae6ab709",
+        "falgunphp/reporter": "dev-master#dbab9584c6dd2b4987dd591646a8fde26729b6b9",
+        "falgunphp/routing": "dev-master#2718c0635dd6aed576e759c6245229298cb6f74d",
+        "falgunphp/template": "dev-master#0ac3192991d10444a4d53f0f484901b5aada1164"
     },
     "config": {
         "sort-packages": true
