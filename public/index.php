@@ -11,6 +11,8 @@ use Falgun\Reporter\DevReporter;
 use Falgun\Reporter\ProdReporter;
 use Falgun\FancyError\ErrorHandler;
 use Falgun\Routing\RouterInterface;
+use Falgun\Fountain\SharedContainer;
+use Falgun\Fountain\RuleBook;
 use Falgun\Fountain\Fountain;
 use Falgun\Http\Request;
 
@@ -60,7 +62,8 @@ $routeLoader = function () use($request, $appDir): RouterInterface {
 
 $router = $routeLoader();
 
-$container = new Fountain(new \Falgun\Fountain\SharedServices());
+$ruleBook = new RuleBook(require $appDir.'/fountain.php');
+$container = new Fountain(new SharedContainer, $ruleBook);
 
 $container->set(Config::class, $config);
 $container->set(Request::class, $request);

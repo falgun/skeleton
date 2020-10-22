@@ -25,7 +25,7 @@
         "php": ">=7.4.0",
         "falgunphp/application": "dev-master#51e37e75b3a7de0e4435640ddb141124391e2b5d",
         "falgunphp/fancyerror": "dev-master#968a4f2355951e27dca8e60c53158609bbcdaf5c",
-        "falgunphp/fountain": "dev-master#af99a9a181bce3344bedbdcec35b7c31157ec85b",
+        "falgunphp/fountain": "dev-master#a0d623d75316b18bcd7fe1dce4a8e8aac10a4ddd",
         "falgunphp/http": "^0.0.3",
         "falgunphp/middlewares": "^0.0.1",
         "falgunphp/reporter": "dev-master#dbab9584c6dd2b4987dd591646a8fde26729b6b9",
