@@ -1,4 +1,7 @@
 <?php
+$startTime = \microtime(true);
+$startMemory = \round(\memory_get_peak_usage(false) / 1024 / 1024, 2);
+
 define('ROOT_DIR', dirname(__DIR__));
 define('DS', DIRECTORY_SEPARATOR);
 define('NS', '\\');
@@ -21,6 +24,16 @@ $config = Config::fromFileDir(ROOT_DIR . '/config');
 $appDir = ROOT_DIR . '/' . $config->getIfAvailable('APP_DIR', 'src');
 
 /**
+ *  Let's not hate errors
+ *  Love them and make them love you
+ *  We will handle error as they deserve
+ */
+$errorHandler = ErrorHandler::createFromConfig($config, ROOT_DIR);
+
+
+$request = Request::createFromGlobals();
+
+/**
  * Huge Memory Wasted here
  * FIX IT
  * Should we use another reporter for production?
@@ -30,20 +43,10 @@ if ($config->get('DEBUG')) {
      * Lets prepare everything for developer reporting
      * Report will be generated on script destruction
      */
-    $reporter = new DevReporter();
+    $reporter = new DevReporter($request, $startTime, $startMemory);
 } else {
     $reporter = new ProdReporter();
 }
-
-/**
- *  Let's not hate errors
- *  Love them and make them love you
- *  We will handle error as they deserve
- */
-$errorHandler = ErrorHandler::createFromConfig($config, ROOT_DIR);
-
-
-$request = Request::createFromGlobals();
 
 /**
  *  Load and initiate routes
@@ -62,7 +65,7 @@ $routeLoader = function () use($request, $appDir): RouterInterface {
 
 $router = $routeLoader();
 
-$ruleBook = new RuleBook(require $appDir.'/fountain.php');
+$ruleBook = new RuleBook(require $appDir . '/fountain.php');
 $container = new Fountain(new SharedContainer, $ruleBook);
 
 $container->set(Config::class, $config);

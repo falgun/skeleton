@@ -28,7 +28,7 @@
         "falgunphp/fountain": "dev-master#a0d623d75316b18bcd7fe1dce4a8e8aac10a4ddd",
         "falgunphp/http": "^0.0.3",
         "falgunphp/middlewares": "^0.0.1",
-        "falgunphp/reporter": "dev-master#dbab9584c6dd2b4987dd591646a8fde26729b6b9",
+        "falgunphp/reporter": "dev-master#3d996982fa26dc41423d3145b2981012be25f5f6",
         "falgunphp/routing": "dev-master#2718c0635dd6aed576e759c6245229298cb6f74d",
         "falgunphp/template": "^0.0.1"
     },
