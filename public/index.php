@@ -28,8 +28,12 @@ $appDir = ROOT_DIR . '/' . $config->getIfAvailable('APP_DIR', 'src');
  *  Love them and make them love you
  *  We will handle error as they deserve
  */
-$errorHandler = ErrorHandler::createFromConfig($config, ROOT_DIR);
-
+if ($config->get('DEBUG')) {
+    $mode = new Falgun\FancyError\Modes\DebugMode(ROOT_DIR);
+} else {
+    $mode = new Falgun\FancyError\Modes\ProductionMode($appDir, ROOT_DIR . '/var/errors');
+}
+$errorHandler = new ErrorHandler($mode);
 
 $request = Request::createFromGlobals();
 
