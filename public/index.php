@@ -19,7 +19,7 @@ use Falgun\Fountain\RuleBook;
 use Falgun\Fountain\Fountain;
 use Falgun\Http\Request;
 
-$config = Config::fromFileDir(ROOT_DIR . '/config');
+$config = Config::fromFileDir(ROOT_DIR . '/config', ['ROOT_DIR' => ROOT_DIR]);
 
 $appDir = ROOT_DIR . '/' . $config->getIfAvailable('APP_DIR', 'src');
 
