@@ -8,7 +8,9 @@ Application Skeleton for Falgun Framework.
 Via Composer
 
 ``` bash
-$ composer create-project falgunphp/skeleton --stability=dev --no-dev 
+$ composer create-project falgunphp/skeleton --stability=dev --no-dev
+# after installation, we can start local server on port 8080 
+$ cd skeleton/ && php -S localhost:8080 -t public/
 ```
 
 ## License
